@@ -14,14 +14,19 @@ using namespace std;
 
 class sender {
   public:
-    static void error(string message);
+    int createSocket();
+    void parseArgs(int argc, char *argv[]);
+    void error(string message);
     void setPort(int toSet);
     void setHost(string toSet);
+    void setDatafile(string toSet);
     int getPort();
     string getHost();
+    string getDatafile();
   private:
     int port;
     string host;
+    string datafile;
 };
 
 #endif // SENDER_H
