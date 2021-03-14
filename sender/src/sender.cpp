@@ -5,17 +5,19 @@ void sender::error(string message) {
   exit(1);
 }
 
-void sender::parseArgs(int argc, char *argv[]) {
+// Return true if its a file
+bool sender::parseArguments(int argc, char *argv[]) {
   // Check and see if arguments are appropriate
   if (argc != 3 && argc != 5) {
     error("Invalid number of arguments.");
   }
   
   // Takes in a datafile
-  if (argc == 5) {
+  if (argc == 5 && strcmp(argv[1], "-f") == 0) {
     setDatafile(argv[2]);
     setHost(argv[3]);
     setPort(atoi(argv[4]));
+    return true;
   }
 
   // No datafile - Only Host & Port
@@ -23,6 +25,8 @@ void sender::parseArgs(int argc, char *argv[]) {
     setHost(argv[1]);
     setPort(atoi(argv[2]));
   }
+
+  return false;
 }
 
 int sender::createSocket() {
@@ -40,16 +44,33 @@ int sender::createSocket() {
   
   // Address for the socket to connect to
   server.sin_family = AF_INET;
-  server.sin_port = htons(port);
   server.sin_addr.s_addr = INADDR_ANY;
+  server.sin_port = htons(port);
 
   // Create connection and check status
   status = bind(net_socket, (struct sockaddr*) &server, sizeof(server));
 
-  if(status == -1) {
+  if(status < 0) {
     error("Could not establish a connection with the socket.");
-  } else {
-    cout << "Status: " << status << "\n";
+  }
+
+  cout << "Socket established on: " << getHost() << "/" << getPort() << "\n";
+  return net_socket;
+}
+
+void sender::send(int socket, const void *packet_data, int size) {
+  struct sockaddr_in addr;
+  addr.sin_family = AF_INET;
+
+  // Set host and port
+  inet_pton(AF_INET, host, &addr.sin_addr.s_addr);
+  addr.sin_port = htons(port);
+
+  // Send data
+  int sent = sendto(socket, packet_data, size, 0, (sockaddr*)&addr, sizeof(addr));
+
+  if (sent < size) {
+    error("Failed to send packets.");
   }
 }
 
@@ -57,11 +78,11 @@ void sender::setPort(int toSet) {
   port = toSet;
 }
 
-void sender::setHost(string toSet) {
+void sender::setHost(char* toSet) {
   host = toSet;
 }
 
-void sender::setDatafile(string toSet) {
+void sender::setDatafile(char* toSet) {
   datafile = toSet;
 }
 
@@ -69,11 +90,11 @@ int sender::getPort() {
   return port;
 }
 
-string sender::getHost() {
+char* sender::getHost() {
   return host;
 }
 
-string sender::getDatafile() {
+char* sender::getDatafile() {
   return datafile;
 }
 

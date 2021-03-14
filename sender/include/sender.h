@@ -11,22 +11,24 @@ using namespace std;
 #include <netdb.h>
 #include <stdlib.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 class sender {
   public:
     int createSocket();
-    void parseArgs(int argc, char *argv[]);
+    bool parseArguments(int argc, char *argv[]);
+    void send(int socket, const void *packet_data, int size);
     void error(string message);
     void setPort(int toSet);
-    void setHost(string toSet);
-    void setDatafile(string toSet);
+    void setHost(char* toSet);
+    void setDatafile(char* toSet);
     int getPort();
-    string getHost();
-    string getDatafile();
+    char* getHost();
+    char* getDatafile();
   private:
     int port;
-    string host;
-    string datafile;
+    char* host;
+    char* datafile;
 };
 
 #endif // SENDER_H
