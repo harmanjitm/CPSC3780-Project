@@ -74,18 +74,6 @@ int sender::createSocket() {
   if (socketID < 0) {
     error("Could not open socket.");
   }
-  
-  // Address for the socket to connect to
-  server.sin_family = AF_INET;
-  server.sin_addr.s_addr = INADDR_ANY;
-  server.sin_port = htons(port);
-
-  // Create connection and check status
-  status = bind(socketID, (struct sockaddr*) &server, sizeof(server));
-
-  if(status < 0) {
-    error("Could not establish a connection with the socket.");
-  }
 
   cout << "Socket established on: " << getHost() << "/" << getPort() << "\n";
   return socketID;
