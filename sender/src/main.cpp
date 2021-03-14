@@ -21,18 +21,9 @@ int main(int argc, char *argv[]) {
     cout << "Sent: " << data << "\n";
   }
 
-  // Get file information for sending
-  ifstream file(s.getDatafile(), std::ios::binary);
-  file.seekg(0, std::ios::end);
-  size_t fileLength = file.tellg();
-  file.seekg(0, std::ios::beg);
-
-  char buf[fileLength];
-  file.read(buf, fileLength);
-
-  // Send file
-  s.send(net_socket, buf, fileLength);
-  cout << "Sent file: " << s.getDatafile() << "\n";
+  if(isDataFile) {
+    cout << "Sent file.\n";
+  }
 
   // End program
   return 0;

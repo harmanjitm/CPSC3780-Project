@@ -8,6 +8,7 @@ using namespace std;
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <fstream>
 #include <netdb.h>
 #include <stdlib.h>
 #include <netinet/in.h>
@@ -22,13 +23,16 @@ class sender {
     void setPort(int toSet);
     void setHost(char* toSet);
     void setDatafile(char* toSet);
+    void setSocketID(int toSet);
     int getPort();
     char* getHost();
     char* getDatafile();
+    int getSocketID();
   private:
     int port;
     char* host;
     char* datafile;
+    int socketID;
 };
 
 #endif // SENDER_H
