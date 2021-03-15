@@ -16,23 +16,23 @@ using namespace std;
 
 class sender {
   public:
-    int createSocket();
-    bool parseArguments(int argc, char *argv[]);
-    void send(int socket, const void *packet_data, int size);
+    int makeSocket();
+    bool parseCMD(int argc, char *argv[]);
+    void sendPacket(int socket, const void *packet_data, int size);
     void error(string message);
     void setPort(int toSet);
     void setHost(char* toSet);
     void setDatafile(char* toSet);
-    void setSocketID(int toSet);
+    void setSocketNum(int toSet);
     int getPort();
     char* getHost();
     char* getDatafile();
-    int getSocketID();
+    int getSocketNum();
   private:
     int port;
     char* host;
     char* datafile;
-    int socketID;
+    int sock_num;
 };
 
 #endif // SENDER_H
