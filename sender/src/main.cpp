@@ -1,4 +1,5 @@
 #include "../include/sender.h"
+#include "../include/Header.h"
 
 #include <fstream>
 #include <iostream>
@@ -8,6 +9,9 @@ int port = 64341;
 sender s;
 
 int main(int argc, char *argv[]) {
+  Header h;
+  h.printHeader();
+  return 0;
   char* data;
 
   // Check arguments and create socket on localhost/127.0.0.1
