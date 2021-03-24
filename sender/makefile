@@ -25,6 +25,9 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 clean:
 	$(RM) -r $(BUILD_DIR)
 
+test:
+	g++ -Wall -g -pthread ./src/HeaderTest.cpp -lgtest_main -lgtest -lpthread
+
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p

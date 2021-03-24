@@ -1,12 +1,13 @@
 #ifndef HEADER_H
 #define HEADER_H
-#define DATA_SZ 256
+#define DATA_SZ 512
 
 using namespace std;
 
 #include <stdint.h>
 #include <iostream>
 #include <bitset>
+#include <cstring>
 
 struct packet {
   uint8_t TypeTRWindow;
@@ -31,17 +32,23 @@ class Header {
     unsigned int getTimestamp(); // 0-2^32-1
     unsigned int getCRC1(); // TODO
     unsigned int getCRC2(); // TODO
-    void *getPacket();
-    void *getPayload();
+    void *getPacket() {
+      return &packet;
+    }
+    std::string getPayload() {
+      return packet.data;
+    }
     void setType(unsigned int type);
     void setTR(unsigned int tr);
     void setWindow(unsigned int window);
     void setSequenceNum(unsigned int seqNum);
     void setLength(unsigned int length);
     void setTimestamp(unsigned int time);
-    void setCRC1(); // TODO
-    void setCRC2(); // TODO
+    void setCRC1(unsigned int crc1); // TODO
+    void setCRC2(unsigned int crc2); // TODO
+    void setPayload(std::string data);
     void printHeader();
+    void printBinary();
 };
 
 #endif // HEADER_H
