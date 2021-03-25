@@ -12,3 +12,7 @@
 - From the command line in the working directory of `./receiver/`, run the following command: `g++ -o receiver receiver.cpp`
 - In order to run the program, run the following command `./receiver [-f datafile.txt] port`
 - Example: `./receiver 64341`
+
+## How to compile and run tests
+- From the command line in the working directory of `./sender/`, run the following command: `make test`
+- Now that the test's are compiled, we can run it using the following command from the current directory: `./a.out`
