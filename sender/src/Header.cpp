@@ -5,12 +5,12 @@ void error(string message) {
 }
 
 Header::Header() {
-  packet.TypeTRWindow = 0;
-  packet.sequenceNum = 0;
+  packet.TypeTRWindow = 1;
+  packet.sequenceNum = 1;
   packet.length = DATA_SZ;
   packet.timestamp = 0;
-  packet.crc1 = 0;
-  packet.crc2 = 0;
+  packet.crc1 = 2;
+  packet.crc2 = 2;
 }
 
 uint8_t changeBit(unsigned int end, int pos, int toChange) {
@@ -121,4 +121,5 @@ void Header::printHeader() {
   cout << "Payload: " << "\t" << getPayload() << "\n";
   cout << "CRC1: " << "\t\t" << getCRC1() << "\n";
   cout << "CRC2: " << "\t\t" << getCRC2() << "\n";
+  cout << "Total Size: " << "\t" << sizeof(packet) << "\n";
 }

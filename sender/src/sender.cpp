@@ -23,6 +23,16 @@ void sender::sendPacket(int socket, const void *packet_data, int size) {
   if (sent < size) {
     error("Failed to send packets.");
   }
+  cout << "=================================" << "\n\n";
+  cout << "----Waiting to receive packets---\n";
+  
+  // Wait and receive packet
+  socklen_t addr_len;
+  addr_len = sizeof sock_address;
+  int bytes = recvfrom(socket, &packet_data, size, 0, (struct sockaddr*)&sock_address, &addr_len);
+  if (bytes == -1) {
+    error("Failed to receive Ack packets.");
+  }
 }
 
 /**
