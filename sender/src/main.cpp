@@ -43,8 +43,7 @@ int main(int argc, char *argv[]) {
     cout << "\n\n\n-----------Sent packet-----------" << "\n\n";
     h.printHeader();
     s.sendPacket(net_socket, h.getPacket(), sizeof(h.getPacket()));
-    cout << "Did not receive ACK packet in time for seq #" << h.getSequenceNum() << "\n";
-    cout << "Retransmitting sequence: " << h.getSequenceNum() << "\n";
+    cout << "Received Ack for Sequence #" << h.getSequenceNum() << "\n";
     h.setSequenceNum(h.getSequenceNum()+1);
   }
 
