@@ -119,7 +119,5 @@ void Header::printHeader() {
   cout << "Length: " << "\t" << getLength() << "\n";
   cout << "Timestamp: " << "\t" << getTimestamp() << "\n";
   cout << "Payload: " << "\t" << getPayload() << "\n";
-  cout << "CRC1: " << "\t\t" << getCRC1() << "\n";
-  cout << "CRC2: " << "\t\t" << getCRC2() << "\n";
   cout << "Total Size: " << "\t" << sizeof(packet) << "\n";
 }

@@ -1,5 +1,14 @@
 #include "../include/receiver.h"
 #include <sstream>
+#include <iostream>
+#include <ctime>
+#include <chrono>
+#include <sys/time.h>
+
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
+using std::chrono::seconds;
+using std::chrono::system_clock;
 
 bool receiver::parseCMD(int argc, char *argv[]) {
   if (argc == 4 && strcmp(argv[1], "-f") == 0) {
@@ -78,7 +87,7 @@ void receiver::connectToSender() {
   freeaddrinfo(servinfo);
 
   // Continue looping and receiving packets
-  cout << "----------Listening For Packets on Port: " << port << "----------" << "\n";
+  cout << "\n----------Listening For Packets on Port: " << port << "----------" << "\n";
   while(true) {
     addr_len = sizeof their_addr;
     if ((numbytes = recvfrom(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&their_addr, &addr_len)) == -1) {
@@ -115,8 +124,6 @@ void receiver::printHeader() {
   cout << "Length: " << "\t" << (int) packet.length << "\n";
   cout << "Timestamp: " << "\t" << packet.timestamp << "\n";
   printf("Payload: \t%c\n", packet.data);
-  cout << "CRC1: " << "\t\t" << (unsigned int) packet.crc1 << "\n";
-  cout << "CRC2: " << "\t\t" << (int) packet.crc2 << "\n";
   cout << "Total Size: " << "\t" << sizeof(packet) << "\n";
   cout << "-------------------------------------------------------\n\n";
   string s;
@@ -124,6 +131,10 @@ void receiver::printHeader() {
   ss << packet.data;
   ss >> s;
   cout << s;
+  int millisec_since_epoch = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+  cout << "Time current: " << millisec_since_epoch << "\n";
+  cout << "Time receive: " << packet.timestamp << "\n";
+  cout << "Time to receive packet (ms): " << millisec_since_epoch - packet.timestamp << "\n";
 }
 
 unsigned int receiver::getType() {
